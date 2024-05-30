@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+  </head>
+  <body>
+    <section class="hero is-info is-bold"> <!--<section class="hero is-primary is-bold"> para color verde-->
+      
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">Asistencia CEA UCSUR<img src="CEA_logo.jpeg" alt="Logo" style="float: right; width: 180px; height: auto;"></h1>
+        </div>
+      </div>
+    </section>
+    <form id="form" class="container m-4 pl-4" method="POST">
+
+           <!--Tipo fecha con formato dd/mm/yyyy-->
+           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+           <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+           <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+           <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.es.min.js"></script>
+           
+           <style>
+            .datepicker-dropdown {
+              background-color: #fff;
+            }
+            .datepicker td, .datepicker th {
+              font-size: 12px;
+            }
+          </style>
+           <div class="field">
+             <label class="label">Fecha</label>
+             <div class="control">
+               <input
+                 class="input"
+                 type="text"
+                 placeholder="yyyy-mm-dd"
+                 name="fecha_pato"
+                 id="date"
+                 style="max-width: 210px;"
+               />
+             </div>
+           </div>
+           
+           <script>
+             $(document).ready(function(){
+               $('#date').datepicker({
+                 format: "yyyy-mm-dd",
+                 language: "es",
+                 autoclose: true,
+                 todayHighlight: true
+               });
+             });
+           </script>
+           
+         
+
+      <!--Fila 1-->
+      <!--Tipo desplegable-->
+      <div class="columns">
+
+        <div class="column">
+          <div class="field">
+            <label class="label">Nombre de practicante/operario</label>
+            <div class="control">
+              <div class="select">
+                <select name="responsable_pato" required>
+                  <option value="" disabled selected hidden>Selecciona una opción</option>
+                  <option value="FT Vitapro">Edinsson Fernando Quiroz Ramirez</option>
+                  <option value="test">Leonela Santos Ninamaque Velasquez</option>
+                  <option value="culcamar">Marco Manuel Rodriguez Arteaga</option>
+                  <option value="AT Vitapro">Oscar Varid Mariaca Duran</option>
+                  <option value="mandasacorp">Percy Castillo Salome</option>
+                  <option value="APB-Bio">Sabina Victoria Aguilar Montenegro</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+   
+</div>
+
+      <hr style="margin-top: 20px; margin-bottom: 20px;">
+      <p class="subtitle is-4 has-text-weight-bold has-text-blue" style="border-top: 1px solid #000; padding-top: 8px;"></p>
+      
+      <div class="field">
+        <label class="label">Fiabilidad</label>
+        <div class="control">
+          <label class="checkbox">
+            <input type="checkbox" name="Agree To Terms" value="yes" /> Me hago responsable de la información brindada 
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Información adicional</label>
+        <div class="control">
+          <textarea
+            class="textarea"
+            placeholder="Comentario"
+            name="comentario_pato"
+          ></textarea>
+        </div>
+      </div>
+      
+      <!--adjuntando pdf-->
+
+     
+
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="button is-primary" type="submit" id="submit-button">
+            Guardar
+          </button>
+        </div>
+        <div class="control">
+          <button class="button is-danger">Cancelar</button>
+        </div>
+      </div>
+    </form>
+    <div
+      id="message"
+      style="
+        display: none;
+        margin: 20px;
+        font-weight: bold;
+        color: rgb(7, 17, 111);
+        padding: 8px;
+        background-color: rgb(83, 241, 31);
+        border-radius: 4px;
+        border-color: rgb(11, 61, 132);
+      "
+    ></div>
+
+    <script>
+      document.getElementById("form").addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevent the default form submission
+        document.getElementById("message").textContent = "Submitting..";
+        document.getElementById("message").style.display = "block";
+        document.getElementById("submit-button").disabled = true;
+
+        // Collect the form data
+        var formData = new FormData(this);
+        var keyValuePairs = [];
+        for (var pair of formData.entries()) {
+          keyValuePairs.push(pair[0] + "=" + pair[1]);
+        }
+
+        var formDataString = keyValuePairs.join("&");
+
+        // Send a POST request to your Google Apps Script
+        fetch(
+             "https://script.google.com/macros/s/AKfycbxjWj-4y9HQ1RAebKaGiKL3EN-xWL81pNLl8Gis46h8a1FA-9CbOFLxF2TZWOFnswzL/exec",
+           //"https://script.google.com/macros/s/AKfycbziICwhCQMLOR_68pU0YeLb75vLWan64poPfVuJI0WTrYw6gUn2LCAQZecLwlu-HzqP/exec",
+          //https://script.google.com/macros/s/AKfycbziICwhCQMLOR_68pU0YeLb75vLWan64poPfVuJI0WTrYw6gUn2LCAQZecLwlu-HzqP/exec
+          //https://script.google.com/macros/s/AKfycbziICwhCQMLOR_68pU0YeLb75vLWan64poPfVuJI0WTrYw6gUn2LCAQZecLwlu-HzqP/exec
+          {
+            redirect: "follow",
+            method: "POST",
+            body: formDataString,
+            headers: {
+              "Content-Type": "text/plain;charset=utf-8",
+            },
+          }
+        )
+          .then(function (response) {
+            // Check if the request was successful
+            if (response) {
+              return response; // Assuming your script returns JSON response
+            } else {
+              throw new Error("Failed to submit the form.");
+            }
+          })
+          .then(function (data) {
+            // Display a success message
+            document.getElementById("message").textContent =
+              "Data submitted successfully!";
+            document.getElementById("message").style.display = "block";
+            document.getElementById("message").style.backgroundColor = "green";
+            document.getElementById("message").style.color = "beige";
+            document.getElementById("submit-button").disabled = false;
+            document.getElementById("form").reset();
+
+            setTimeout(function () {
+              document.getElementById("message").textContent = "";
+              document.getElementById("message").style.display = "none";
+            }, 2600);
+          })
+          .catch(function (error) {
+            // Handle errors, you can display an error message here
+            console.error(error);
+            document.getElementById("message").textContent =
+              "An error occurred while submitting the form.";
+            document.getElementById("message").style.display = "block";
+          });
+      });
+    </script>
+  </body>
+</html>
