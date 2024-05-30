@@ -35,7 +35,7 @@
             class="input"
             type="text"
             placeholder="yyyy-mm-dd"
-            name="fecha_pato"
+            name="fecha"
             id="date"
             style="max-width: 210px;"
           />
@@ -58,7 +58,7 @@
             <label class="label">Nombre de practicante/operario</label>
             <div class="control">
               <div class="select">
-                <select name="responsable_pato" id="responsable_pato" required>
+                <select name="nombre" id="nombre" required>
                   <option value="" disabled selected hidden>Selecciona una opción</option>
                   <option value="Edinsson Fernando Quiroz Ramirez">Edinsson Fernando Quiroz Ramirez</option>
                   <option value="Leonela Santos Ninamaque Velasquez">Leonela Santos Ninamaque Velasquez</option>
@@ -96,7 +96,7 @@
           <textarea
             class="textarea"
             placeholder="Comentario"
-            name="comentario_pato"
+            name="comentario"
           ></textarea>
         </div>
       </div>
@@ -125,7 +125,7 @@
       "
     ></div>
     <script>
-      document.getElementById("responsable_pato").addEventListener("change", function () {
+      document.getElementById("nombre").addEventListener("change", function () {
         const tipoInput = document.getElementById("tipo");
         const selectedName = this.value;
 
