@@ -1,147 +1,152 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
-    />
-  </head>
-  <body>
-    <section class="hero is-info is-bold">
-      <div class="hero-body">
-        <div class="container">
-          <h1 class="title">Asistencia CEA UCSUR<img src="CEA_logo.jpeg" alt="Logo" style="float: right; width: 180px; height: auto;"></h1>
-        </div>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+  <style>
+    .datepicker-dropdown {
+      background-color: #fff;
+    }
+    .datepicker td, .datepicker th {
+      font-size: 12px;
+    }
+    .input, .Viewer {
+      width: 100%;
+      height: 38px; /* Ajusta el alto según sea necesario */
+    }
+    .select select {
+      width: 100%;
+      height: 38px; /* Ajusta el alto según sea necesario */
+      padding-left: 0.75rem; /* Alineación del texto */
+      padding-right: 0.75rem; /* Alineación del texto */
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.es.min.js"></script>
+</head>
+<body>
+  <section class="hero is-danger is-bold"> <!--<section class="hero is-primary is-bold"> para color verde-->
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">Asistencia UCSUR <img src="CEA_logo.jpeg" alt="Logo" style="float: right; width: 180px; height: auto;"></h1>
       </div>
-    </section>
-    <form id="form" class="container m-4 pl-4" method="POST">
-      <!-- Tipo fecha con formato dd/mm/yyyy -->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.es.min.js"></script>
-      <style>
-        .datepicker-dropdown {
-          background-color: #fff;
-        }
-        .datepicker td, .datepicker th {
-          font-size: 12px;
-        }
-      </style>
-      <div class="field">
+    </div>
+  </section>
+  <form id="form" class="container m-4 pl-3" method="POST">
+    <!--Tipo fecha con formato dd/mm/yyyy-->
+    <div class="field">
         <label class="label">Fecha</label>
         <div class="control">
           <input
             class="input"
             type="text"
-            placeholder="yyyy-mm-dd"
-            name="fecha"
+            placeholder="dd/mm/yyyy"
             id="date"
-            style="max-width: 210px;"
+            disabled
+          />
+          <!-- Campo oculto que almacena la fecha actual para el envío del formulario -->
+          <input
+            type="hidden"
+            name="fecha"
+            id="fecha_hidden"
           />
         </div>
       </div>
       <script>
         $(document).ready(function(){
-          $('#date').datepicker({
-            format: "yyyy-mm-dd",
-            language: "es",
-            autoclose: true,
-            todayHighlight: true
-          });
+          // Establecer la fecha actual en el campo de fecha visible y el campo oculto
+          var today = new Date();
+          var day = ("0" + today.getDate()).slice(-2);
+          var month = ("0" + (today.getMonth() + 1)).slice(-2);
+          var year = today.getFullYear();
+          var currentDate = day + '/' + month + '/' + year;
+      
+          // Asignar la fecha actual a los campos
+          $('#date').val(currentDate);      // Campo visible deshabilitado
+          $('#fecha_hidden').val(currentDate); // Campo oculto que será enviado
         });
       </script>
-      <!-- Fila 1 -->
-      <div class="columns">
-        <div class="column">
-          <div class="field">
-            <label class="label">Nombre de practicante/operario</label>
-            <div class="control">
-              <div class="select">
-                <select name="nombre" id="nombre" required>
-                  <option value="" disabled selected hidden>Selecciona una opción</option>
-                  <option value="Edinsson Fernando Quiroz Ramirez">Edinsson Fernando Quiroz Ramirez</option>
-                  <option value="Leonela Santos Ninamaque Velasquez">Leonela Santos Ninamaque Velasquez</option>
-                  <option value="Marco Manuel Rodriguez Arteaga">Marco Manuel Rodriguez Arteaga</option>
-                  <option value="Oscar Varid Mariaca Duran">Oscar Varid Mariaca Duran</option>
-                  <option value="Percy Castillo Salome">Percy Castillo Salome</option>
-                  <option value="Sabina Victoria Aguilar Montenegro">Sabina Victoria Aguilar Montenegro</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="column">
-          <div class="field">
-            <label class="label">Tipo</label>
-            <div class="control">
-              <input class="input" type="text" name="tipo" id="tipo" readonly />
+    <!--Fila 1-->
+    <!--Tipo desplegable-->
+    <div class="columns">
+      <div class="column">
+        <div class="field">
+          <label class="label">Responsable</label>
+          <div class="control">
+            <div class="select">
+              <select name="nombre" id="nombre" required>
+                <option value="" disabled selected hidden>Selecciona una opción</option>
+                <option value="Edinsson Fernando Quiroz Ramirez">Edinsson Fernando Quiroz Ramirez</option>
+                <option value="Leonela Santos Ninamaque Velasquez">Leonela Santos Ninamaque Velasquez</option>
+                <option value="Marco Manuel Rodriguez Arteaga">Marco Manuel Rodriguez Arteaga</option>
+                <option value="Oscar Varid Mariaca Duran">Oscar Varid Mariaca Duran</option>
+                <option value="Percy Castillo Salome">Percy Castillo Salome</option>
+                <option value="Sabina Victoria Aguilar Montenegro">Sabina Victoria Aguilar Montenegro</option>
+              </select>
             </div>
           </div>
         </div>
       </div>
-      <hr style="margin-top: 20px; margin-bottom: 20px;">
-      <p class="subtitle is-4 has-text-weight-bold has-text-blue" style="border-top: 1px solid #000; padding-top: 8px;"></p>
-      <div class="field">
-        <label class="label">Fiabilidad</label>
-        <div class="control">
-          <label class="checkbox">
-            <input type="checkbox" name="Agree To Terms" value="yes" /> Me hago responsable de la información brindada 
-          </label>
+      <div class="column">
+        <div class="field">
+          <label class="label">Tipo</label>
+          <div class="control">
+            <input class="Viewer" type="text" name="tipo" id="tipo" readonly />
+          </div>
         </div>
       </div>
-      <div class="field">
-        <label class="label">Información adicional</label>
-        <div class="control">
-          <textarea
-            class="textarea"
-            placeholder="Comentario"
-            name="comentario"
-          ></textarea>
-        </div>
+    </div>
+    <div class="field">
+      <label class="label">Información adicional</label>
+      <div class="control">
+        <textarea
+          class="textarea"
+          placeholder="Comentario"
+          name="comentario"
+        ></textarea>
       </div>
-      <div class="field is-grouped">
-        <div class="control">
-          <button class="button is-primary" type="submit" id="submit-button">
-            Guardar
-          </button>
-        </div>
-        <div class="control">
-          <button class="button is-danger">Cancelar</button>
-        </div>
+    </div>
+    <div class="field is-grouped">
+      <div class="control">
+        <button class="button is-primary" type="submit" id="submit-button">
+          Guardar
+        </button>
       </div>
-    </form>
-    <div
-      id="message"
-      style="
-        display: none;
-        margin: 20px;
-        font-weight: bold;
-        color: rgb(7, 17, 111);
-        padding: 8px;
-        background-color: rgb(83, 241, 31);
-        border-radius: 4px;
-        border-color: rgb(11, 61, 132);
-      "
-    ></div>
-    <script>
-      document.getElementById("nombre").addEventListener("change", function () {
-        const tipoInput = document.getElementById("tipo");
-        const selectedName = this.value;
+      <div class="control">
+        <button class="button is-danger" type="button">Cancelar</button>
+      </div>
+    </div>
+  </form>
+  <div id="message" style="
+    display: none;
+    margin: 20px;
+    font-weight: bold;
+    color: rgb(7, 17, 111);
+    padding: 8px;
+    background-color: rgb(83, 241, 31);
+    border-radius: 4px;
+    border-color: rgb(11, 61, 132);
+  "></div>
+  <script>
+    document.getElementById("nombre").addEventListener("change", function () {
+      const tipoInput = document.getElementById("tipo");
+      const selectedName = this.value;
 
-        const roles = {
-          "Edinsson Fernando Quiroz Ramirez": "Operario",
-          "Leonela Santos Ninamaque Velasquez": "Practicante",
-          "Marco Manuel Rodriguez Arteaga": "Operario",
-          "Oscar Varid Mariaca Duran": "Operario",
-          "Percy Castillo Salome": "Operario",
-          "Sabina Victoria Aguilar Montenegro": "Practicante"
-        };
+      const roles = {
+        "Edinsson Fernando Quiroz Ramirez": "Operario",
+        "Leonela Santos Ninamaque Velasquez": "Practicante",
+        "Marco Manuel Rodriguez Arteaga": "Operario",
+        "Oscar Varid Mariaca Duran": "Operario",
+        "Percy Castillo Salome": "Operario",
+        "Sabina Victoria Aguilar Montenegro": "Practicante"
+      };
 
-        tipoInput.value = roles[selectedName] || "";
-      });
+      tipoInput.value = roles[selectedName] || "";
+    });
 
-      document.getElementById("form").addEventListener("submit", function (e) {
+    document.getElementById("form").addEventListener("submit", function (e) {
         e.preventDefault(); // Prevent the default form submission
         document.getElementById("message").textContent = "Submitting..";
         document.getElementById("message").style.display = "block";
@@ -151,33 +156,43 @@
         var formData = new FormData(this);
         var keyValuePairs = [];
         for (var pair of formData.entries()) {
-          keyValuePairs.push(pair[0] + "=" + pair[1]);
+            keyValuePairs.push(pair[0] + "=" + pair[1]);
         }
 
         var formDataString = keyValuePairs.join("&");
+        
+        // Calcular el timestamp con la resta de 5 horas y el formato hh:mm:ss
+        var timestamp = new Date();
+        timestamp.setHours(timestamp.getHours());
+        var hours = String(timestamp.getHours()).padStart(2, '0');
+        var minutes = String(timestamp.getMinutes()).padStart(2, '0');
+        var seconds = String(timestamp.getSeconds()).padStart(2, '0');
+        var formattedTimestamp = `${hours}:${minutes}:${seconds}`;
 
         // Send a POST request to your Google Apps Script
         fetch(
-          "https://script.google.com/macros/s/AKfycbyZmeGDUgX3m39dzAm7nhdZevF714XEw0PLrcJxC0d2lEGXI0Ci5iZMpHDWCNAb4dcS0w/exec",
-          {
+            "https://script.google.com/macros/s/AKfycbyZmeGDUgX3m39dzAm7nhdZevF714XEw0PLrcJxC0d2lEGXI0Ci5iZMpHDWCNAb4dcS0w/exec",
+            {
             redirect: "follow",
             method: "POST",
-            body: formDataString,
+            body: formDataString + "&timestamp=" + encodeURIComponent(formattedTimestamp),
             headers: {
-              "Content-Type": "text/plain;charset=utf-8",
+                "Content-Type": "text/plain;charset=utf-8",
             },
-          }
-        )
-          .then(function (response) {
-            if (response) {
-              return response;
-            } else {
-              throw new Error("Failed to submit the form.");
             }
-          })
-          .then(function (data) {
+        )
+        .then(function (response) {
+            // Check if the request was successful
+            if (response) {
+            return response.json(); // Assuming your script returns JSON response
+            } else {
+            throw new Error("Failed to submit the form.");
+            }
+        })
+        .then(function (data) {
+            // Display a success message
             document.getElementById("message").textContent =
-              "Data submitted successfully!";
+            "Data submitted successfully!";
             document.getElementById("message").style.display = "block";
             document.getElementById("message").style.backgroundColor = "green";
             document.getElementById("message").style.color = "beige";
@@ -185,18 +200,19 @@
             document.getElementById("form").reset();
 
             setTimeout(function () {
-              document.getElementById("message").textContent = "";
-              document.getElementById("message").style.display = "none";
+            document.getElementById("message").textContent = "";
+            document.getElementById("message").style.display = "none";
             }, 2600);
-          })
-          .catch(function (error) {
+        })
+        .catch(function (error) {
+            // Handle errors, you can display an error message here
             console.error(error);
             document.getElementById("message").textContent =
-              "An error occurred while submitting the form.";
+            "An error occurred while submitting the form.";
             document.getElementById("message").style.display = "block";
-          });
-      });
-    </script>
-  </body>
+        });
+        });
+  </script>
+</body>
 </html>
 
